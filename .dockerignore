@@ -1,0 +1,12 @@
+.dockerignore
+build.sh
+docker-compose.*
+*Dockerfile*
+.git*
+run.sh
+.vscode/
+venv/
+README*
+*.pyc
+__pycache__
+LICENSE

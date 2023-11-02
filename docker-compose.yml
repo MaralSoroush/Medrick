@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres:15.3-alpine
+    container_name: game-db
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: medrick
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    # ports:
+      # - ${DB_DEBUG_PORT}:5432
+    networks:
+      - game-network
+
+
+  game:
+    image: medrick-game
+    build: .
+    container_name: game
+    restart: unless-stopped
+    entrypoint: "./entrypoint.sh"
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    networks:
+      - game-network
+
+
+
+volumes:
+  pgdata:
+
+networks:
+  game-network:
+
+
+  
