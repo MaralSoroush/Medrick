@@ -9,7 +9,6 @@
 
 ## Run the Project
 ### 1. Clone the repo on your local machine
-### 2. docker compose build
-### 3. docker compose up -d 
+### 2. docker compose up -d --build
 ** logs can be seen in urls.txt file in the container 
 
