@@ -21,13 +21,16 @@ class ScoreView(LoggingMixin, viewsets.ModelViewSet):
         player_id = self.request.query_params.get('playerid')
         records = self.serializer_class_board(
             query_list[0:100], many=True)
-        if player_id:
-            player_id = int(player_id)
-            if Score.objects.filter(player_id=player_id).exists():
-                for query in query_list:
-                    if int(player_id) == query['player_id']:
-                        serialzier = self.serializer_class_board(query)
+        try:
+            if player_id:
+                player_id = int(player_id)
+                if Score.objects.filter(player_id=player_id).exists():
+                    for query in query_list:
+                        if int(player_id) == query['player_id']:
+                            serialzier = self.serializer_class_board(query)
 
-                        return response.Response({**serialzier.data, "records": records.data})
-            return response.Response(status=404, data={"msg": "player with this id not found"})
-        return response.Response({"records": records.data})
+                            return response.Response({**serialzier.data, "records": records.data})
+                return response.Response(status=404, data={"msg": "player with this id not found"})
+            return response.Response({"records": records.data})
+        except ValueError:
+            return response.Response(status=400, data={"msg": "enter an integer for player id"})

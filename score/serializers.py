@@ -16,15 +16,6 @@ class CreateScoreSerializer(serializers.ModelSerializer):
                 {"msg": "invalid_score", "data": value})
         return value
 
-    def validate_player_id(self, value):
-        """
-        checks if player id is between positive.
-        """
-        if value < 0:
-            raise serializers.ValidationError(
-                {"msg": "invalid_id"})
-        return value
-
 
 class ScoreBoardSerialzier(serializers.Serializer):
     player_id = serializers.IntegerField()
